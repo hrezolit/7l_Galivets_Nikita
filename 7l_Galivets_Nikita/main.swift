@@ -10,6 +10,14 @@ import Foundation
 // 1) Придумать класс, методы которого могут завершаться неудачей и возвращать либо значение, либо ошибку Error?. Реализовать их вызов и обработать результат метода при помощи конструкции if let, или guard let.
 // 2) Придумать класс, методы которого могут выбрасывать ошибки. Реализуйте несколько throws-функций. Вызовите их и обработайте результат вызова при помощи конструкции try/catch.
 
+enum PowerSwitch {
+    case on
+    case off
+}
+enum StopButtom {
+    case go
+    case stop
+}
 enum ElevatorError: Error {
     
     case overload
@@ -42,15 +50,15 @@ class Elevator {
     var currentFloor : Int
     var requestedFloor : Int
     var passengers : Person
-    var isWorking: Bool
-    var isEmergencyStoped: Bool
+    var isWorking: PowerSwitch
+    var isEmergencyStoped: StopButtom
     
     init(weightLimit: Int,
          currentFloor: Int,
          requestedFloor: Int,
          passengers: Person,
-         isWorking: Bool,
-         isEmergencyStoped: Bool)
+         isWorking: PowerSwitch,
+         isEmergencyStoped: StopButtom)
     {
         self.weightLimit = weightLimit
         self.currentFloor = currentFloor
@@ -62,10 +70,10 @@ class Elevator {
     
     func newFloorRequest() throws {
         
-        guard isWorking == true else {
+        guard isWorking == .on else {
             throw ElevatorError.EmergencyPowerOff
         }
-        guard isEmergencyStoped == false else {
+        guard isEmergencyStoped == .go else {
             throw ElevatorError.EmergencyStop
         }
         guard weightLimit > passengers.personsWeight else {
@@ -90,22 +98,22 @@ class Building{
                                  currentFloor: 1,
                                  requestedFloor: 0,
                                  passengers: Person(),
-                                 isWorking: true,
-                                 isEmergencyStoped: false)
+                                 isWorking: .on,
+                                 isEmergencyStoped: .go)
     
     var secondElevator = Elevator(weightLimit: 1000,
                                   currentFloor: 1,
                                   requestedFloor: 0,
                                   passengers: Person(),
-                                  isWorking: false,
-                                  isEmergencyStoped: false)
+                                  isWorking: .on,
+                                  isEmergencyStoped: .stop)
     
     var cargoElevator = Elevator(weightLimit: 3000,
                                  currentFloor: 1,
                                  requestedFloor: 0,
                                  passengers: Person(),
-                                 isWorking: true,
-                                 isEmergencyStoped: false)
+                                 isWorking: .on,
+                                 isEmergencyStoped: .go)
     
 }
 
