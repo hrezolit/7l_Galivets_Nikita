@@ -25,7 +25,8 @@ enum ElevatorError: Error {
     case EmergencyStop
 }
 
-class Person{
+final class Person{
+    
     var numberOfPersons: Int
     var personsWeight: Int
     
@@ -44,7 +45,7 @@ class Person{
     }
 }
 
-class Elevator {
+final class Elevator {
     
     var weightLimit: Int
     var currentFloor : Int
@@ -90,9 +91,7 @@ class Elevator {
     
 }
 
-
-
-class Building{
+final class Building{
     
     var firstElevator = Elevator(weightLimit: 1000,
                                  currentFloor: 1,
@@ -126,6 +125,7 @@ First Elevator
 ---------------
 status:
 """)
+
 do {
     try building.firstElevator.newFloorRequest()
 } catch ElevatorError.overload {
@@ -145,7 +145,6 @@ Second Elevator
 ---------------
 status:
 """)
-
 
 do {
     try building.secondElevator.newFloorRequest()
